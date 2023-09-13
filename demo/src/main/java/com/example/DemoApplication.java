@@ -9,6 +9,8 @@ import org.springframework.data.domain.Sort;
 
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.entities.Actor;
+import com.example.domains.entities.dtos.ActorDTO;
+import com.example.domains.entities.dtos.ActorSort;
 
 import jakarta.transaction.Transactional;
 
@@ -48,15 +50,27 @@ public class DemoApplication implements CommandLineRunner {
 //		dao.findAll(PageRequest.of(1, 10, Sort.by("actorId"))).forEach(System.out::println);
 //		dao.findByFirstNameStartingWith("P", PageRequest.of(0, 5, Sort.by("actorId"))).forEach(System.out::println);
 //		dao.findByFirstNameStartingWith("P", PageRequest.of(0, 5, Sort.by("actorId"))).getContent().forEach(System.out::println);
-		var item = dao.findById(1);
-		if(item.isEmpty()) {
-			System.err.println("No encontrado");
-		} else {
-			var actor = item.get();
-			System.out.println(actor);
-			actor.getFilmActors().forEach(p -> System.out.println(p.getFilm().getTitle()));
-		}
-		
+//		var item = dao.findById(1);
+//		if(item.isEmpty()) {
+//			System.err.println("No encontrado");
+//		} else {
+//			var actor = item.get();
+//			System.out.println(actor);
+//			actor.getFilmActors().forEach(p -> System.out.println(p.getFilm().getTitle()));
+//		}
+//		var actor = new Actor(0, null, "12345678z");
+//		if(actor.isInvalid()) {
+//			System.out.println(actor.getErrorsMessage());
+//		} else {
+//			dao.save(actor);
+//		}
+//		var dto = new ActorDTO(0, "kk", "ssss");
+//		dao.save(ActorDTO.from(dto));
+//		dao.findAll().forEach(p -> System.out.println(ActorDTO.from(p)));
+//		dao.queryByActorIdGreaterThan(200).forEach(System.out::println);
+//		dao.readByActorIdGreaterThan(200).forEach(p -> System.out.println(p.getActorId() + " " + p.getNombre()));
+		dao.findByActorIdGreaterThan(200, ActorDTO.class).forEach(System.out::println);
+		dao.findByActorIdGreaterThan(200, ActorSort.class).forEach(p -> System.out.println(p.getActorId() + " " + p.getNombre()));
 	}
 	
 	@Transactional
