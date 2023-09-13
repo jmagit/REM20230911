@@ -79,7 +79,7 @@ public class DemoApplication implements CommandLineRunner {
 //		dao.findByActorIdGreaterThan(200, ActorDTO.class).forEach(System.out::println);
 //		dao.findByActorIdGreaterThan(200, ActorSort.class).forEach(p -> System.out.println(p.getActorId() + " " + p.getNombre()));
 //		dao.findAllBy(ActorDTO.class).forEach(System.out::println);
-		srv.add(new Actor(0, null, "12345678z"));
+//		srv.add(new Actor(0, null, "12345678z"));
 	}
 	
 	@Transactional
