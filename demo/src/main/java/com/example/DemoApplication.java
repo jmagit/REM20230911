@@ -34,7 +34,7 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	@Transactional
 	public void run(String... args) throws Exception {
-		System.out.println("Aplicación arrancada cambio");
+		System.out.println("Aplicación arrancada");
 		
 //		dao.save(new Actor(0, "Pepito", "Grillo"));
 //		var item = dao.findById(202);
