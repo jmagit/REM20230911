@@ -82,6 +82,7 @@ public class CotillaResource {
 	
 	@GetMapping(path = "/balancea/rt")
 	@SecurityRequirement(name = "bearerAuth")
+	@PreAuthorize("hasRole('ROLE_ADMINISTRADORES')")
 	public List<String> getBalanceoRT() {
 		List<String> rslt = new ArrayList<>();
 		LocalDateTime inicio = LocalDateTime.now();
@@ -239,7 +240,7 @@ public class CotillaResource {
 //	Tracer tracer;
 	
 //	@PreAuthorize("hasRole('ADMINISTRADORES')")
-//	@PreAuthorize("authenticated")
+	@PreAuthorize("authenticated")
 	@SecurityRequirement(name = "bearerAuth")
 	@PostMapping(path = "/pelis/{id}/like")
 //	@Observed(name = "enviar.megusta", contextualName = "enviar-megusta", lowCardinalityKeyValues = {"megustaType", "pelicula"})
