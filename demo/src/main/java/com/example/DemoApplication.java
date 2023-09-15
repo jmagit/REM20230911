@@ -7,9 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.web.client.RestTemplate;
 
 import com.example.domains.contracts.repositories.ActorRepository;
 import com.example.domains.contracts.repositories.LanguageRepository;
@@ -38,6 +44,8 @@ import jakarta.transaction.Transactional;
         externalDocs = @ExternalDocumentation(description = "Documentación del proyecto", url = "https://github.com/jmagit/REM20230911")
 )
 @SecurityScheme(name = "bearerAuth", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT")
+@EnableDiscoveryClient
+@EnableFeignClients("com.example.application.proxies")
 @SpringBootApplication
 public class DemoApplication implements CommandLineRunner {
 
@@ -53,6 +61,35 @@ public class DemoApplication implements CommandLineRunner {
         };
     }
 
+	@Bean
+	@Primary
+	public RestTemplate restTemplate(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+
+	@Bean
+	@LoadBalanced
+	public RestTemplate restTemplateLB(RestTemplateBuilder builder) {
+		return builder.build();
+	}
+
+	/*
+	@Autowired
+	private LoadBalancedExchangeFilterFunction filterFunction;
+
+	@Bean
+	WebClient webClient() {
+		return WebClient.builder().baseUrl("http://CATALOGO-SERVICE/").filter(filterFunction).build();
+	}
+
+	@Bean
+	ActoresProxy actoresProxy(WebClient webClient) {
+		HttpServiceProxyFactory httpServiceProxyFactory = HttpServiceProxyFactory
+				.builder(WebClientAdapter.forClient(webClient)).build();
+		return httpServiceProxyFactory.createClient(ActoresProxy.class);
+	}
+
+	 */
 //	@Autowired
 //	ActorRepository dao;
 //	@Autowired
